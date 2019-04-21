@@ -1,9 +1,12 @@
 FROM openjdk:8-jre-alpine
 
-ENV VERSION 2.0.29
+RUN apk --no-cache add curl unzip sudo
 
-RUN apk --no-cache add curl
+RUN curl -o crowdin-cli.zip -SL https://downloads.crowdin.com/cli/v2/crowdin-cli.zip \
+	&& unzip -j crowdin-cli.zip \
+  && sh crowdin.sh \
+  && rm *.*
 
-RUN curl -o /crowdin-cli.jar -SL https://github.com/crowdin/crowdin-cli-2/releases/download/v$VERSION/crowdin-cli-$VERSION.jar
+ADD entrypoint.sh /usr/local/bin/crowdin
 
-ENTRYPOINT [ "java", "-jar", "/crowdin-cli.jar" ]
+ENTRYPOINT [ "crowdin" ]
