@@ -1,5 +1,7 @@
 FROM openjdk:8-jre-alpine
 
+WORKDIR /wrk
+
 RUN apk --no-cache add curl unzip sudo
 
 RUN curl -o crowdin-cli.zip -SL https://downloads.crowdin.com/cli/v2/crowdin-cli.zip \
